@@ -2,6 +2,7 @@ import React , {Component} from 'react'
 import HeatMap from "../components/HeatMap";
 import Tooltip from 'react-tooltip'
 import {connect} from "react-redux";
+import { Link } from 'react-router-dom'
 import BulletChart from "../components/BulletChart";
 
 class HeatMapContainer extends Component {
@@ -32,20 +33,23 @@ class HeatMapContainer extends Component {
         })
     }
 
-
     render() {
         return (
-            <div style={{display:'flex'}}>
-                <div>
-                    <HeatMap rowSelection={this.rowSelection}
-                             data={this.props.data ? this.props.data.toJS() : {}}/>
+            <div>
+                <p><Link to="/home">Home</Link></p>
+                <div style={{display:'flex'}}>
+                    <div>
+                        <HeatMap rowSelection={this.rowSelection}
+                                 data={this.props.data ? this.props.data.toJS() : {}}/>
 
-                    <Tooltip id="heatmap-cell" event="mouseover" eventOff="mouseout" class="extra" html={true}/>
+                        <Tooltip id="heatmap-cell" event="mouseover" eventOff="mouseout" class="extra" html={true}/>
+                    </div>
+                    <div style={{marginTop:'5%'}}>
+                        <BulletChart data={this.state.rowData}/>
+                    </div>
                 </div>
-                <div style={{marginTop:'5%'}}>
-                    <BulletChart data={this.state.rowData}/>
-                </div>
-            </div>)
+            </div>
+            )
     }
 }
 

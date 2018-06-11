@@ -7,8 +7,7 @@ class AppContainer extends Component {
     render() {
         return (
             <div className="AppContainer">
-                <p><Link to="/heatmap1">HeatMap</Link></p>
-                <p><Link to="/heatmap">HeatMap Container</Link></p>
+                <p><Link to="/heatmap">HeatMap</Link></p>
             </div>
         );
     }
