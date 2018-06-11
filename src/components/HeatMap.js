@@ -12,15 +12,15 @@ const SPACE_IN_COMPONENTS = 10
 const LEFT_MARGIN = 100
 const HEATMAP_LEGENDS = [
     {
-        title:'Failure',
+        title: 'Failure',
         color: 'red'
     },
     {
-        title:'Normal',
+        title: 'Normal',
         color: 'green'
     },
     {
-        title:'Predicted Failure',
+        title: 'Predicted Failure',
         color: 'orange'
     }
 ]
@@ -65,11 +65,11 @@ export default class HeatMap extends Component {
         this.height = props.noOfDays * (props.SQUARE_LENGTH) + props.svgTopPadding
     }
 
-    showLegends(props = this.props){
+    showLegends(props = this.props) {
         let {data} = props
         let y_tranform = (Object.keys(data)).length * props.SQUARE_LENGTH + 50
         var legend = this.svg.append("g")
-            .attr('id','heatmapLegends')
+            .attr('id', 'heatmapLegends')
             .attr("height", 20)
             .attr("width", 20)
             .attr('transform', 'translate(20,' + y_tranform + ')')
@@ -112,6 +112,7 @@ export default class HeatMap extends Component {
                 return d.title;
             });
     }
+
     convertData(props = this.props) {
         let {data} = props
         let tmp = []
@@ -148,12 +149,12 @@ export default class HeatMap extends Component {
                 let downTimeCount = d.filter(function (x) {
                     return x == "1"
                 }).length
-                let efficiency = (24-downTimeCount) / 24 * 100
-                if(efficiency < 70) {
+                let efficiency = (24 - downTimeCount) / 24 * 100
+                if (efficiency < 70) {
                     img = redIcon
-                }else if (efficiency >=90) {
+                } else if (efficiency >= 90) {
                     img = greenIcon
-                }else {
+                } else {
                     img = yellowIcon
                 }
 
@@ -191,12 +192,12 @@ export default class HeatMap extends Component {
         let {data} = props
         let dates = []
 
-        for(let key in data){
+        for (let key in data) {
             let dateSplit = key.split("-")
             dates.push(dateSplit[dateSplit.length - 1]);
         }
-        dates = dates.sort(function (a,b) {
-            return a-b
+        dates = dates.sort(function (a, b) {
+            return a - b
         })
 
 
@@ -227,7 +228,7 @@ export default class HeatMap extends Component {
                 return 'Date'
             })
             .attr('x', function (d, i) {
-                return -15 +  LEFT_MARGIN
+                return -15 + LEFT_MARGIN
             })
             .attr('y', function (d, i) {
                 return 0;
@@ -325,10 +326,10 @@ export default class HeatMap extends Component {
 
 
         var chart = this.svg.append("g")
-            .attr('id','heatmapChart')
+            .attr('id', 'heatmapChart')
             .attr("height", this.height)
             .attr("width", this.width)
-            .attr("transform", "translate(" + (self.props.margin.left + 50 )+ "," + self.props.margin.top + ")")
+            .attr("transform", "translate(" + (self.props.margin.left + 50) + "," + self.props.margin.top + ")")
 
 
         //this.dayRects = this.svg.selectAll('.day-cell')
@@ -353,7 +354,7 @@ export default class HeatMap extends Component {
                 return (props.SQUARE_LENGTH) * d.slot + 5
             })
             .attr('fill', function (d, i) {
-                if(parseInt(d.status)){
+                if (parseInt(d.status)) {
                     return 'red'
                 }
                 return '#0fb7af'
@@ -362,12 +363,12 @@ export default class HeatMap extends Component {
             .attr('data-for', 'heatmap-cell')
             .attr('data-tip', function (d, i) {
                 let status = parseInt(d.status) ? 'Pass' : 'Failure'
-                let tooltip ='Status: ' + status + '<br/> Success Rate: ' + '60%'
+                let tooltip = 'Status: ' + status + '<br/> Success Rate: ' + '60%'
                 return tooltip
             })
-            .on('click', function (d,indx) {
-                let severityArr = datesData[d.slot]
-                let downTimeCount = severityArr .filter(function (x) {
+            .on('click', function (d, indx) {
+                let severityArr = datesData[d.slot - 1]
+                let downTimeCount = severityArr && severityArr.filter(function (x) {
                     return x == "1"
                 }).length
                 self.props.rowSelection(downTimeCount)
