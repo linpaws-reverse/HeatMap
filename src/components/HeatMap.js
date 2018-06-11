@@ -149,9 +149,9 @@ export default class HeatMap extends Component {
                     return x == "1"
                 }).length
                 let efficiency = (24-downTimeCount) / 24 * 100
-                if(efficiency < 30) {
+                if(efficiency < 70) {
                     img = redIcon
-                }else if (efficiency >=50) {
+                }else if (efficiency >=90) {
                     img = greenIcon
                 }else {
                     img = yellowIcon
